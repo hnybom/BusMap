@@ -1,0 +1,5 @@
+.idea
+node_modules
+public/javascripts
+public/stylesheets
+client/sass/build.scss
