@@ -20,7 +20,6 @@ var BusStore = Reflux.createStore({
         var self = this;
         var socket = io.connect();
         socket.on('buslocations', function(data) {
-            console.log(data);
             self.updateLocations(data);
         });
     },
