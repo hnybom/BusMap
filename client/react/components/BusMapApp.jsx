@@ -1,12 +1,12 @@
 var React = require('react');
-var ReactDOM = require('react-dom');
+var Map = require('./Map.jsx');
 
 module.exports = BusMapApp = React.createClass({
     // Render the component
     render: function(){
         return (
             <div className="busmap-app">
-                <h1>Hello World from busmap-app!</h1>
+                <Map />
             </div>
         )
     }
