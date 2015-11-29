@@ -1,5 +1,8 @@
 .idea
+.sass-cache
+build
 node_modules
+bower_components
 public/javascripts
 public/stylesheets
 client/sass/build.scss

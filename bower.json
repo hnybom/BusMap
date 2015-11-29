@@ -1,0 +1,27 @@
+{
+  "name": "BusMap",
+  "homepage": "https://github.com/hnybom/BusMap",
+  "authors": [
+    "Henri Nybom <henri.nybom@gmail.com>"
+  ],
+  "description": "Busses on the map",
+  "main": "client/react/client.js",
+  "moduleType": [
+    "node"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "react": "~0.14.3",
+    "reflux": "~0.3.0",
+    "bootstrap": "~3.3.6",
+    "lodash": "~3.10.1"
+  }
+}

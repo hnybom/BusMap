@@ -3,6 +3,15 @@ module.exports = function(grunt) {
     // Project configuration.
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
+        watch: {
+            browserify: {
+                files: ['client/react/**/*.jsx', 'client/react/**/*.js'],
+                tasks: ['browserify:dev']
+            },
+            options: {
+                nospawn: true
+            }
+        },
         browserify: {
             dev: {
                 options: {
@@ -23,28 +32,31 @@ module.exports = function(grunt) {
                 }
             }
         },
-        watch: {
-            browserify: {
-                files: ['client/react/**/*.jsx', 'client/react/**/*.js'],
-                tasks: ['browserify:dev']
-            },
-            options: {
-                nospawn: true
+        bower_concat: {
+            main: {
+                dest: 'public/javascripts/vendor/bower.js',
+                destCss: 'public/stylesheets/vendor/bower.css',
+                mainFiles: {
+                    bootstrap: [ 'dist/css/bootstrap.min.css', 'dist/js/bootstrap.min.js' ]
+                },
+                bowerOptions: {
+                    relative: false
+                }
             }
         },
         concat: {
             dist: {
                 src: [
-                    'client/sass/**/*.scss',
+                    'client/sass/*.scss',
                 ],
-                dest: 'client/sass/build.scss',
+                dest: 'build/sass/build.scss',
             }
         },
         sass: {
             dist: {
                 files: [{
                     expand: true,
-                    cwd: 'client/sass',
+                    cwd: 'build/sass',
                     src: ['build.scss'],
                     dest: 'public/stylesheets',
                     ext: '.css'
@@ -65,13 +77,14 @@ module.exports = function(grunt) {
     });
 
     grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.loadNpmTasks('grunt-browserify');
     grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-browserify');
+    grunt.loadNpmTasks('grunt-bower-concat');
     grunt.loadNpmTasks('grunt-contrib-sass');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
 
     // Default task(s).
     grunt.registerTask('default', ['watch']);
-    grunt.registerTask('build', ['browserify:build', 'concat', 'sass', 'cssmin']);
+    grunt.registerTask('build', ['browserify:build', 'bower_concat', 'concat', 'sass', 'cssmin']);
 
 };
