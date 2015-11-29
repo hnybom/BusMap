@@ -31,6 +31,8 @@ function updateLocations() {
             }
 
         })
+    }).on('error', function(e) {
+        console.log("Got error: " + e.message);
     });
 }
 

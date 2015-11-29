@@ -8,6 +8,24 @@ module.exports = function(grunt) {
                 files: ['client/react/**/*.jsx', 'client/react/**/*.js'],
                 tasks: ['browserify:dev']
             },
+            concat: {
+                files: ['client/sass/**/*.scss'],
+                tasks: ['concat:dist']
+            },
+            sass: {
+                files: ['build/sass/**/*.scss'],
+                tasks: ['sass:dist']
+            },
+            cssmin: {
+                files: ['public/stylesheets/**/*.css'],
+                tasks: ['cssmin']
+            },
+            livereload: {
+                // Here we watch the files the sass task will compile to
+                // These files are sent to the live reload server after sass compiles to them
+                options: { livereload: true },
+                files: ['public/**/*'],
+            },
             options: {
                 nospawn: true
             }

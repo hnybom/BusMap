@@ -6,7 +6,7 @@ module.exports = BusMapApp = React.createClass({
     render: function(){
         return (
             <div className="busmap-app">
-                <h1>Hello World from busmap-app</h1>
+                <h1>Hello World from busmap-app!</h1>
             </div>
         )
     }
