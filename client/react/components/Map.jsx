@@ -1,7 +1,12 @@
+'use strict';
+
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-module.exports = BusMapApp = React.createClass({
+var Map = React.createClass({
+    propTypes: {
+        locations: React.PropTypes.array
+    },
     // Render the component
     render: function(){
         return (
@@ -38,3 +43,5 @@ module.exports = BusMapApp = React.createClass({
         });
     }
 });
+
+module.exports = Map;

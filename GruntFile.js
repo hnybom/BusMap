@@ -37,7 +37,7 @@ module.exports = function(grunt) {
                     transform: ['reactify']
                 },
                 files: {
-                    'public/javascripts/bundle.js': 'client/react/**/*.jsx'
+                    'public/javascripts/bundle.js': ['client/react/**/*.jsx','client/react/**/*.js']
                 }
             },
             dist: {
@@ -46,7 +46,7 @@ module.exports = function(grunt) {
                     transform: ['reactify']
                 },
                 files: {
-                    'public/javascripts/bundle.js': 'client/react/**/*.jsx'
+                    'public/javascripts/bundle.js': ['client/react/**/*.jsx','client/react/**/*.js']
                 }
             }
         },

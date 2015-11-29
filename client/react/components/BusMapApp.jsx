@@ -1,7 +1,9 @@
+'use strict';
+
 var React = require('react');
 var Map = require('./Map.jsx');
 
-module.exports = BusMapApp = React.createClass({
+var BusMapApp = React.createClass({
     // Render the component
     render: function(){
         return (
@@ -11,3 +13,5 @@ module.exports = BusMapApp = React.createClass({
         )
     }
 });
+
+module.exports = BusMapApp;
