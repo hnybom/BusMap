@@ -11,7 +11,7 @@ var BusMapApp = React.createClass({
     render: function(){
         return (
             <div className="busmap-app">
-                <Map />
+                <Map locations={this.state.locations}/>
             </div>
         )
     }

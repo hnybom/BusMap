@@ -3,18 +3,19 @@
 var React = require('react');
 var _ = require('lodash');
 
-var vectorLayer;
-var iconFeatures=[];
+var vectorSource;
 
-var createIcon = function(name, coords) {
+var createIcon = function(id, name, coords) {
     return new ol.Feature({
         geometry: new ol.geom.Point(ol.proj.transform(coords, 'EPSG:4326',
             'EPSG:3857')),
-        name: name
+        name: name,
+        id: id
     });
 };
 
 var Map = React.createClass({
+    displayName: 'Map',
     propTypes: {
         locations: React.PropTypes.array
     },
@@ -25,7 +26,35 @@ var Map = React.createClass({
         )
     },
     componentWillReceiveProps: function(nextProps) {
-        console.log(nextProps.locations); // TODO: why no props :(
+        var features = vectorSource.getFeatures();
+        vectorSource.clear();
+
+        _.each(nextProps.locations, function(item) {
+        /*    var match = _.find(features, function(f) {
+                return f.B.id == item.journeyId;
+            });
+            if(match) {
+                var geometry = match.getGeometry();
+                var oldCoords = geometry.getCoordinates();
+                var newX = item.x - oldCoords[0];
+                var newY = item.y - oldCoords[1];
+                if(newX != 0 && newY != 0) geometry.translate(newX, newY);
+            } else {*/
+                var icon = createIcon(item.journeyId, item.lCode, [item.x, item.y]);
+                vectorSource.addFeature(icon);
+            //}
+        });
+/*
+        _.each(features, function(f) {
+            var match = _.find(nextProps.locations, function(item) {
+                return f.B.id == item.journeyId;
+            });
+            if(!match) {
+                vectorSource.removeFeature(f);
+            }
+        });
+        */
+
     },
     componentDidMount: function() {
 
@@ -36,9 +65,6 @@ var Map = React.createClass({
             center: tampere,
             zoom: 12
         });
-
-        var iconFeature1 = createIcon("Bus", [23.766331, 61.497452]);
-        iconFeatures.push(iconFeature1);
 
         var map = new ol.Map({
             layers: [
@@ -59,9 +85,7 @@ var Map = React.createClass({
             view: view
         });
 
-        var vectorSource = new ol.source.Vector({
-            features: iconFeatures //add an array of features
-        });
+        vectorSource = new ol.source.Vector();
 
         var iconStyle = new ol.style.Style({
             image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
@@ -74,7 +98,7 @@ var Map = React.createClass({
             }))
         });
 
-        vectorLayer = new ol.layer.Vector({
+        var vectorLayer = new ol.layer.Vector({
             source: vectorSource,
             style: iconStyle
         });
