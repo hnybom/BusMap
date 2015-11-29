@@ -22,7 +22,7 @@ module.exports = function(grunt) {
                     'public/javascripts/bundle.js': 'client/react/**/*.jsx'
                 }
             },
-            build: {
+            dist: {
                 options: {
                     debug: false,
                     transform: ['reactify']
@@ -85,6 +85,6 @@ module.exports = function(grunt) {
 
     // Default task(s).
     grunt.registerTask('default', ['watch']);
-    grunt.registerTask('build', ['browserify:build', 'bower_concat', 'concat', 'sass', 'cssmin']);
+    grunt.registerTask('build', ['browserify:dist', 'bower_concat', 'concat', 'sass', 'cssmin']);
 
 };
