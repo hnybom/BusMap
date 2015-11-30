@@ -22,7 +22,7 @@ var Map = React.createClass({
     // Render the component
     render: function(){
         return (
-            <div id="map" className="map"></div>
+            <div id="map" className="map"><div id="popup"></div></div>
         )
     },
     componentWillReceiveProps: function(nextProps) {
@@ -104,6 +104,36 @@ var Map = React.createClass({
         });
 
         map.addLayer(vectorLayer);
+
+        var popupEl = document.getElementById('popup');
+
+        var popup = new ol.Overlay({
+            element: popupEl,
+            positioning: 'bottom-center',
+            stopEvent: false
+        });
+        map.addOverlay(popup);
+
+        // display popup on click
+        map.on('click', function(evt) {
+            var feature = map.forEachFeatureAtPixel(evt.pixel,
+                function(feature, layer) {
+                    return feature;
+                });
+            if (feature) {
+                var geometry = feature.getGeometry();
+                var coord = geometry.getCoordinates();
+                popup.setPosition(coord);
+                $(popupEl).popover({
+                    'placement': 'top',
+                    'html': true,
+                    'content': feature.get('name')
+                });
+                $(popupEl).popover('show');
+            } else {
+                $(popupEl).popover('destroy');
+            }
+        });
     }
 });
 
