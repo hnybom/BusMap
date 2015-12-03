@@ -28,11 +28,10 @@ var Map = React.createClass({
     // Render the component
     render: function(){
         return (
-            <div><div id="map" className="map"></div><div id="popup"></div></div>
+            <div><div id="map" className="map"></div><div id="popup"></div><div id="curStopPopup"></div></div>
         )
     },
     componentWillReceiveProps: function(nextProps) {
-        var features = vectorSource.getFeatures();
         vectorSource.clear();
         _.each(nextProps.locations, function(item) {
             var icon = createIcon(item);
@@ -90,9 +89,15 @@ var Map = React.createClass({
         map.addLayer(vectorLayer);
 
         var popupEl = document.getElementById('popup');
+        var stopPopupEl = document.getElementById('curStopPopup');
 
         $(popupEl).popover({
             'placement': 'top',
+            'html': true
+        });
+
+        $(stopPopupEl).popover({
+            'placement': 'bottom',
             'html': true
         });
 
@@ -101,7 +106,15 @@ var Map = React.createClass({
             positioning: 'bottom-center',
             stopEvent: false
         });
+
+        var stopPopup = new ol.Overlay({
+            element: stopPopupEl,
+            positioning: 'bottom-center',
+            stopEvent: false
+        });
+
         map.addOverlay(popup);
+        map.addOverlay(stopPopup);
 
         // display popup on click
         map.on('click', function(evt) {
@@ -115,8 +128,20 @@ var Map = React.createClass({
                 popup.setPosition(coord);
                 $(popupEl).attr('data-content', feature.get('name'));
                 $(popupEl).popover('show');
+                $.getJSON('/rest/gtfs/stop/' + feature.get('currStop'), function(data) {
+                    var stopData = data[0];
+                    if(stopData) {
+                        stopPopup.setPosition(ol.proj.transform(stopData.loc, 'EPSG:4326',
+                            'EPSG:3857'));
+                        $(stopPopupEl).attr('data-content', 'Seuraava pysäkki: ' + stopData.stop_name);
+                        $(stopPopupEl).popover('show');
+                    } else {
+                        $(stopPopupEl).popover('hide');
+                    }
+                });
             } else {
                 $(popupEl).popover('hide');
+                $(stopPopupEl).popover('hide');
             }
 
         });
