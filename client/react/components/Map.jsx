@@ -5,11 +5,17 @@ var _ = require('lodash');
 
 var vectorSource;
 
-var createIcon = function(id, name, coords) {
+var createIcon = function(item) {
+    var id = item.journeyId,
+        name = item.lCode,
+        coords = [item.x, item.y];
+
     return new ol.Feature({
         geometry: new ol.geom.Point(ol.proj.transform(coords, 'EPSG:4326',
             'EPSG:3857')),
         name: name,
+        currStop: item.currStop,
+        prevStop: item.prevStop,
         id: id
     });
 };
@@ -28,32 +34,10 @@ var Map = React.createClass({
     componentWillReceiveProps: function(nextProps) {
         var features = vectorSource.getFeatures();
         vectorSource.clear();
-
         _.each(nextProps.locations, function(item) {
-        /*    var match = _.find(features, function(f) {
-                return f.B.id == item.journeyId;
-            });
-            if(match) {
-                var geometry = match.getGeometry();
-                var oldCoords = geometry.getCoordinates();
-                var newX = item.x - oldCoords[0];
-                var newY = item.y - oldCoords[1];
-                if(newX != 0 && newY != 0) geometry.translate(newX, newY);
-            } else {*/
-                var icon = createIcon(item.journeyId, item.lCode, [item.x, item.y]);
-                vectorSource.addFeature(icon);
-            //}
+            var icon = createIcon(item);
+            vectorSource.addFeature(icon);
         });
-/*
-        _.each(features, function(f) {
-            var match = _.find(nextProps.locations, function(item) {
-                return f.B.id == item.journeyId;
-            });
-            if(!match) {
-                vectorSource.removeFeature(f);
-            }
-        });
-        */
 
     },
     componentDidMount: function() {
