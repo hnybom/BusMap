@@ -76,8 +76,8 @@ var Map = React.createClass({
                 anchorXUnits: 'fraction',
                 anchorYUnits: 'pixels',
                 opacity: 1,
-                scale: 0.07,
-                src: 'images/bus-stop.svg'
+                scale: 0.19,
+                src: 'images/school25.png'
             }))
         });
 
