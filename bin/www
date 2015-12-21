@@ -7,7 +7,8 @@
 var app = require('../app');
 var debug = require('debug')('BusMap:server');
 var http = require('http');
-var streambroker = require('../utils/busstreambroker')
+var streambroker = require('../utils/BusStreamBroker');
+var dataAnalyzer = require('../utils/DataAnalyzer');
 
 /**
  * Get port from environment and store in Express.

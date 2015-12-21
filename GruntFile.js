@@ -21,13 +21,11 @@ module.exports = function(grunt) {
                 tasks: ['cssmin']
             },
             livereload: {
-                // Here we watch the files the sass task will compile to
-                // These files are sent to the live reload server after sass compiles to them
                 options: { livereload: true },
                 files: ['public/**/*'],
             },
             options: {
-                nospawn: true
+                nospawn: false
             }
         },
         browserify: {
@@ -65,7 +63,7 @@ module.exports = function(grunt) {
         concat: {
             dist: {
                 src: [
-                    'client/sass/*.scss',
+                    'client/sass/**/*.scss',
                 ],
                 dest: 'build/sass/build.scss',
             }

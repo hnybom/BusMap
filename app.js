@@ -8,8 +8,10 @@ var bodyParser = require('body-parser');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var gtfs = require('./routes/gtfs-api');
+var mongoose = require('mongoose')
 
 var app = express();
+mongoose.connect('mongodb://localhost/busmap');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

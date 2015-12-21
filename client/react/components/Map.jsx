@@ -28,7 +28,7 @@ var Map = React.createClass({
     // Render the component
     render: function(){
         return (
-            <div><div id="map" className="map"></div><div id="popup"></div><div id="curStopPopup"></div></div>
+            <div id="map" className="map"><div id="popup"></div><div id="curStopPopup"></div></div>
         )
     },
     componentWillReceiveProps: function(nextProps) {
